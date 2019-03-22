@@ -71,6 +71,55 @@
 
     };
 
+    /**
+     * 快速排序：性能通常比其他的复杂度为O(nlogn)的排序算法好
+     * 算法思想：从数组中间选择一项为主元，创建两个指针，左边指向数组第一项，右边指向数组最后一个项。
+     *          移动左指针直到找到一个比主元大的元素，接着移动右指针，直到找到一个比主元小的元素，然后交换他们
+     *          重复此过程，直至左指针超过右指针；接着，算法对划分后的小数组重复之前步骤，直至数组已完全排序
+     */
+    this.quickSort = function () {
+        quick(array, 0, array.length-1);
+    };
+
+    var quick = function (array, left, right) {
+        var index;
+
+        if (array.length > 1) {
+            index = partition(array, left, right);
+
+            if (left < index-1) {
+                quick(array, left, index-1);
+            }
+            if (index < right) {
+                quick(array, index, right);
+            }
+        }
+    };
+
+    var partition = function (array, left, right) {
+
+        var pivot = array[Math.floor((left + right) / 2)],
+        i = left,
+        j = right;
+
+        while (i <= j) {
+            while (array[i] < pivot) {
+                i++;
+            }
+
+            while (array[j] > pivot) {
+                j--;
+            }
+
+            if ( i<= j) {
+                swap(array, i, j);
+                i++;
+                j--;
+            }
+        }
+
+        return i;
+    };
 
 };
 
@@ -90,7 +139,8 @@ console.log(array.toString());
 
 // array.bubbleSort();
 // array.modifiedBullbleSort();
-array.selectionSort();
+// array.selectionSort();
+array.quickSort();
 
 console.log(array.toString());
 
